@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,12 +17,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+// Simply re-export the globally defined require function. This is mainly useful to isolate it is a
+// es-module. Allowing, for instance, to mock its result.
+export const require = globalThis.require;

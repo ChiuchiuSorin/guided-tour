@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,26 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
+import { require } from "./requirejs.js";
+
+/**
+ * Load requirejs modules using an asynchronous call instead of a callback.
+ *
+ * @param ids an array of ids to load using require js
+ * @return {Promise<unknown>} return the array of resolved requested modules
+ * @since 1.0
+ */
+export function loadById(...ids) {
+  let resolveP;
+  const promise = new Promise((resolve) => {
+    resolveP = resolve;
+  });
+  require([...ids], function (...response) {
+    if (ids.length === 1 && response.length > 0) {
+      resolveP(response[0]);
+    } else {
+      resolveP(response);
     }
+  });
+  return promise;
 }

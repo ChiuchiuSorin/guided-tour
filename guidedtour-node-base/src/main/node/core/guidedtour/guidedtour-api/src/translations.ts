@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,12 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+// TODO: move to a dedicated module (see XWIKI-24006)
+/**
+ * The translations result. It's a map of translation keys as keys, and their translation values in the requested locale
+ * as values.
+ * @since 1.0
+ * @beta
+ */
+type Translations = { [p: string]: string };
+export type { Translations };

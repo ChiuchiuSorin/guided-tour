@@ -17,12 +17,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.xwiki.contrib.guidedtour.api.exceptions;
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
+import org.xwiki.stability.Unstable;
+
+/**
+ * Exception thrown when an invalid id is provided.
+ *
+ * @version $Id$
+ * @since 1.0
+ */
+@Unstable
+public class InvalidIdException extends Exception
+{
+    /**
+     * Constructor for InvalidIdException.
+     *
+     * @param message the message to be displayed when the exception is thrown
+     * @param parameters the parameters to be used in the message
+     */
+    public InvalidIdException(String message, Object... parameters)
+    {
+        super(String.format(message, parameters));
     }
 }

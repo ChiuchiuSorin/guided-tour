@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+import { TourTaskStatus } from "./tourTaskStatus";
+import type { GuidedTourManager } from "./rest/GuidedTourManager";
+import type { StepManagerApi } from "./rest/StepManagerApi";
+import type { TaskManagerApi } from "./rest/TaskManagerApi";
+import type { TourManagerApi } from "./rest/TourManagerApi";
+import type { TourStep, TourTask, TourTour } from "./tourData";
+import type { TranslationQuery } from "./translationQuery";
+import type { Translations } from "./translations";
+
+export type {
+  GuidedTourManager,
+  StepManagerApi,
+  TaskManagerApi,
+  TourManagerApi,
+  TourStep,
+  TourTask,
+  TourTour,
+  TranslationQuery,
+  Translations,
+};
+
+export { TourTaskStatus };

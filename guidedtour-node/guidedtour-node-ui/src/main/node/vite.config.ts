@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,12 +17,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+import {generateWebjarNodeConfig} from "@xwiki/contrib-guidedtour-dev-config/vite-config";
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+export default generateWebjarNodeConfig(import.meta.url, [
+  "@xwiki/contrib-guidedtour-ui",
+  "@xwiki/contrib-guidedtour-api",
+]);

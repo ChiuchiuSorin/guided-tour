@@ -1,0 +1,18 @@
+diff --git a/dist/index.es.js b/dist/index.es.js
+index 67978141d7d3545ea17ed233f7198d04206d3523..be8ab215a788ad7811777e23987c2d4ea80bd0ae 100644
+--- a/dist/index.es.js
++++ b/dist/index.es.js
+@@ -1,3 +1,4 @@
++import __xwiki_prettier_rec__ from "eslint-plugin-prettier/recommended";
+ import Ia from "@eslint/js";
+ import Ua from "@eslint/config-helpers";
+ import ra from "eslint-plugin-headers";
+@@ -1587,7 +1588,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+       "tsdoc/syntax": "error"
+     }
+   },
+-  za,
++  __xwiki_prettier_rec__,
+   {
+     files: ["**/*.{ts,tsx}"],
+     extends: [

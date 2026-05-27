@@ -17,12 +17,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.xwiki.contrib.guidedtour.test.ui;
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.xwiki.contrib.guidedtour.test.po.TourWidget;
+import org.xwiki.test.docker.junit5.TestReference;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * Functional tests for the Tour Application.
+ *
+ * @version $Id$
+ */
+@UITest
+class GuidedTourApplicationIT
+{
+    /**
+     * The displayed tours should not include inactive tours, or tours which the user has no rights to view.
+     */
+    @Test
+    void tourVisibility(TestUtils testUtils, TestReference testReference)
+    {
+        testUtils.gotoPage(testReference);
+        TourWidget tourWidget = new TourWidget();
+        assertEquals(tourWidget.getTourIds(), List.of("xwiki:GuidedTour.PanelTour"));
     }
 }

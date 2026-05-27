@@ -18,11 +18,19 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
+import { guidedTourManager } from "@xwiki/contrib-guidedtour-xwiki";
+import { GuidedTourWidget } from "@xwiki/contrib-guidedtour-ui";
+import { createApp } from "vue";
+
+function init() {
+  const app = createApp(GuidedTourWidget, { guidedTourManager });
+  app.mount("#guidedtour-uix");
+}
+
+if (document.querySelector('script[src*="/jsx/TourCode/TourJS"]')) {
+  console.warn(
+      "Since the Tour Application is installed, not showing the GuidedTour Widget, to prevent conflicts.",
+  );
+} else {
+  init();
 }

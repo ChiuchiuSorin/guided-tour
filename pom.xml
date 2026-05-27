@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.xwiki.contrib</groupId>
+    <artifactId>parent-platform</artifactId>
+    <version>18.3.0</version>
+  </parent>
+  <artifactId>guidedtour</artifactId>
+  <groupId>org.xwiki.contrib.guidedtour</groupId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Guided Tour Application - Parent POM</name>
+  <packaging>pom</packaging>
+  <description>Interactive and configurable onboarding tours.</description>
+  <properties>
+    <xwiki.issueManagement.jira.id>GUIDEDTOUR</xwiki.issueManagement.jira.id>
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+  </properties>
+  <modules>
+    <module>guidedtour-api</module>
+    <module>guidedtour-default</module>
+    <module>guidedtour-default-tour</module>
+    <module>guidedtour-node-base</module>
+    <module>guidedtour-node</module>
+    <module>guidedtour-rest</module>
+    <module>guidedtour-ui</module>
+    <module>guidedtour-webjar</module>
+  </modules>
+  <profiles>
+    <profile>
+      <id>integration-tests</id>
+      <modules>
+        <module>guidedtour-test</module>
+      </modules>
+    </profile>
+  </profiles>
+  <developers>
+    <developer>
+      <id>mleduc</id>
+      <name>Manuel Leduc</name>
+      <organization>XWiki SAS</organization>
+      <organizationUrl>https://www.xwiki.com</organizationUrl>
+    </developer>
+    <developer>
+      <id>abrassat</id>
+      <name>Manuel Leduc</name>
+      <organization>XWiki SAS</organization>
+      <organizationUrl>https://www.xwiki.com</organizationUrl>
+    </developer>
+    <developer>
+      <id>schiuchiu</id>
+      <name>Sorin Chiuchiu</name>
+      <organization>XWiki SAS</organization>
+      <organizationUrl>https://www.xwiki.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/xwiki-contrib/guided-tour.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki-contrib/guided-tour.git</developerConnection>
+    <url>https://github.com/xwiki-contrib/guided-tour/tree/master</url>
+    <tag>HEAD</tag>
+  </scm>
+</project>

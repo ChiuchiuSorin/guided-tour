@@ -17,12 +17,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+import {fileURLToPath} from "node:url";
+import {configDefaults, defineConfig, mergeConfig} from "vitest/config";
+import viteConfig from "./vite.config";
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+export default mergeConfig(
+    viteConfig,
+    defineConfig({
+        test: {
+            environment: "happy-dom",
+            exclude: [...configDefaults.exclude, "e2e/**"],
+            root: fileURLToPath(new URL("./", import.meta.url)),
+        },
+    }),
+);

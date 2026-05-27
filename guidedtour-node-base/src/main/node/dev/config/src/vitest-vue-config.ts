@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+import defaultConfig from "./vitest-config.js";
+import { defineConfig, mergeConfig } from "vitest/config";
+import type { UserConfig } from "vite";
+
+const config: UserConfig = mergeConfig(
+  defaultConfig,
+  defineConfig({
+    test: {
+      environment: "happy-dom",
+    },
+  }),
+);
+export default config;

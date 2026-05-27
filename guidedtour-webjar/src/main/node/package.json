@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "name": "guidedtour-webjar",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "lint": "exit 0",
+    "test:unit": "vitest --run --passWithNoTests"
+  },
+  "dependencies": {
+    "@xwiki/contrib-guidedtour-ui": "workspace:*",
+    "@xwiki/contrib-guidedtour-xwiki": "workspace:*",
+    "vue-i18n": "catalog:"
+  },
+  "peerDependencies": {
+    "vue": "3.x"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "@xwiki/platform-tool-tsconfig": "catalog:",
+    "flush-promises": "catalog:",
+    "happy-dom": "catalog:",
+    "lodash-es": "catalog:",
+    "sinon": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

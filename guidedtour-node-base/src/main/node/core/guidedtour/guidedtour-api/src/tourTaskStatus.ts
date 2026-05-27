@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
+/**
+ * All Possible Task Statuses.
+ *
+ * @since 1.0
+ * @beta
+ */
+export enum TourTaskStatus {
+  TODO = "TODO",
+  SKIPPED = "SKIPPED",
+  DONE = "DONE",
 }

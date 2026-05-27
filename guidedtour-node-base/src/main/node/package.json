@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "@xwiki/contrib-guidedtour-node-base",
+  "version": "1.0.0-SNAPSHOT",
+  "type": "module",
+  "files": [],
+  "scripts": {
+    "api-extractor:ci": "pnpm --filter \"@xwiki/contrib-guidedtour-*\" run api-extractor:ci",
+    "build": "pnpm --filter \"@xwiki/contrib-guidedtour-*\" run build",
+    "lint": "eslint \"./{core,dev}/**/src/**/*.{ts,vue}\" --max-warnings=0",
+    "publint": "pnpm --filter \"@xwiki/contrib-guidedtour-*\" exec publint --pack pnpm --strict",
+    "test:unit": "pnpm --filter \"@xwiki/contrib-guidedtour-*\" run test"
+  },
+  "devDependencies": {
+    "@xwiki/platform-tool-eslintconfig": "catalog:",
+    "@xwiki/platform-tool-tsdocconfig": "catalog:",
+    "eslint": "catalog:",
+    "jiti": "catalog:",
+    "publint": "catalog:"
+  }
+}

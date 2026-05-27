@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,20 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+import { DefaultGuidedTourManager } from "./rest/DefaultGuidedTourManager";
+import { TourStore } from "./rest/TourStore";
+
+/**
+ * The main API of the GuidedTour app.
+ * @since 1.0
+ * @beta
+ */
+const sharedStore = new TourStore();
+/**
+ * The main API of the GuidedTour app.
+ * @since 1.0
+ * @beta
+ */
+const guidedTourManager = new DefaultGuidedTourManager(sharedStore);
+
+export { type DefaultGuidedTourManager, guidedTourManager };

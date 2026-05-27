@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "guidedtour-node-ui",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "lint": "exit 0",
+    "test:unit": "exit 0 ## no tests needed for this package"
+  },
+  "dependencies": {
+    "@xwiki/contrib-guidedtour-ui": "workspace:*",
+    "@xwiki/contrib-guidedtour-xwiki": "workspace:*"
+  },
+  "devDependencies": {
+    "@xwiki/contrib-guidedtour-dev-config": "workspace:*",
+    "vite": "catalog:"
+  }
+}

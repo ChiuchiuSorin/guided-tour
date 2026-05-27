@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "name": "@xwiki/contrib-guidedtour-dev-config",
+  "version": "1.0.0-SNAPSHOT",
+  "license": "LGPL 2.1",
+  "author": "XWiki Org Community <contact@xwiki.org>",
+  "homepage": "https://xwiki.org/",
+  "repository": {
+    "type": "git",
+    "directory": "guidedtour-node-base/src/main/node/dev/config",
+    "url": "git+https://github.com/xwiki-contrib/guided-tour.git"
+  },
+  "bugs": {
+    "url": "https://jira.xwiki.org/projects/GUIDEDTOUR/"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vite-config": {
+      "types": "./dist/vite-config.d.ts",
+      "import": "./dist/vite-config.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@jridgewell/remapping": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-css-injected-by-js": "catalog:",
+    "vite-plugin-dts": "catalog:"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "catalog:",
+    "@types/node": "catalog:",
+    "@xwiki/platform-tool-tsconfig": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

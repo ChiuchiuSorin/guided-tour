@@ -1,4 +1,4 @@
-/*
+/**
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,11 +18,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-node('docker') {
-    xwikiBuild {
-        xvnc = false
-        goals = 'clean deploy jacoco:report sonar:sonar'
-        profiles = 'quality'
-        sonar = true
-    }
-}
+/**
+ * Representation of a guidedtour Task.
+ *
+ * @since 1.0
+ * @beta
+ */
+export type TourStep = {
+  element?: string;
+  order: number;
+  title?: string;
+  content: string;
+  placement?: string;
+  backdrop?: boolean;
+  reflex: boolean;
+  path?: string;
+  targetClass?: string;
+  // Document Reference
+  targetPage?: string;
+  targetAction?: string;
+  queryParameters?: string;
+  // TODO: Somehow include here some driver.js style properties.
+};
