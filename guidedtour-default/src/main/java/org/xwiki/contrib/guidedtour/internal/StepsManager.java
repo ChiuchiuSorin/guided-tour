@@ -194,9 +194,9 @@ public class StepsManager
     {
         XWikiContext wikiContext = this.wikiContextProvider.get();
         XWiki wiki = wikiContext.getWiki();
-        DocumentReference tourDocRef = documentReferenceResolver.resolve(tourId);
+        DocumentReference tourDocRef = this.documentReferenceResolver.resolve(tourId);
         if (wiki.exists(tourDocRef, wikiContext)) {
-            DocumentReference taskDocRef = documentReferenceResolver.resolve(taskId, tourDocRef);
+            DocumentReference taskDocRef = this.documentReferenceResolver.resolve(taskId, tourDocRef);
             if (wiki.exists(taskDocRef, wikiContext)) {
                 XWikiDocument taskDoc = wiki.getDocument(taskDocRef, wikiContext);
                 return taskDoc.getXObjects(STEP_CLASS).stream()

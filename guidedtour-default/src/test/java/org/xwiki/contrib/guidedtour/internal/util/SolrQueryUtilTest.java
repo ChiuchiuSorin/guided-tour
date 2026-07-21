@@ -59,16 +59,16 @@ public class SolrQueryUtilTest
         String filterQuery = "filterQuery";
         List<String> filteredLines = List.of("test", "reference", "wiki", "spaces", "name");
 
-        when(queryManager.createQuery(queryString, "solr")).thenReturn(query);
-        when(query.bindValue("fq", filterQuery)).thenReturn(query);
-        when(query.bindValue("fl", filteredLines)).thenReturn(query);
-        when(query.bindValue("group", true)).thenReturn(query);
-        when(query.bindValue("group.field", "fullname")).thenReturn(query);
-        when(query.bindValue("group.main", true)).thenReturn(query);
-        when(query.execute()).thenReturn(List.of(queryResponse));
-        when(queryResponse.getResults()).thenReturn(result);
+        when(this.queryManager.createQuery(queryString, "solr")).thenReturn(this.query);
+        when(this.query.bindValue("fq", filterQuery)).thenReturn(this.query);
+        when(this.query.bindValue("fl", filteredLines)).thenReturn(this.query);
+        when(this.query.bindValue("group", true)).thenReturn(this.query);
+        when(this.query.bindValue("group.field", "fullname")).thenReturn(this.query);
+        when(this.query.bindValue("group.main", true)).thenReturn(this.query);
+        when(this.query.execute()).thenReturn(List.of(this.queryResponse));
+        when(this.queryResponse.getResults()).thenReturn(this.result);
 
-        SolrDocumentList solrDocumentList = solrQueryUtil.executeQuery(queryString, filterQuery, List.of("test"));
-        assertEquals(result, solrDocumentList);
+        SolrDocumentList solrDocumentList = this.solrQueryUtil.executeQuery(queryString, filterQuery, List.of("test"));
+        assertEquals(this.result, solrDocumentList);
     }
 }

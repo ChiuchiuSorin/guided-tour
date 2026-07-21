@@ -117,7 +117,7 @@ public enum TourProperty
      */
     public String getBaseKey()
     {
-        return baseKey;
+        return this.baseKey;
     }
 
     /**
@@ -128,7 +128,7 @@ public enum TourProperty
      */
     public String getObjectKey()
     {
-        return (suffix == null) ? baseKey : baseKey + "_" + suffix;
+        return (this.suffix == null) ? this.baseKey : this.baseKey + "_" + this.suffix;
     }
 
     /**

@@ -73,7 +73,7 @@ public class SolrQueryUtil
         filteredLines.add(WIKI_KEY);
         filteredLines.add(SPACES_KEY);
         filteredLines.add(NAME_KEY);
-        Query query = queryManager.createQuery(qs, "solr");
+        Query query = this.queryManager.createQuery(qs, "solr");
         query.bindValue("fq", fq);
         query.bindValue("fl", filteredLines);
         query.bindValue("group", true).bindValue("group.field", "fullname").bindValue("group.main", true);

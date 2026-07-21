@@ -50,7 +50,6 @@ public interface TasksResource extends XWikiRestComponent
      * @param tourId the tour id
      * @return the list of tasks for the given tour and 200 status code if the retrieval is successful, 401 if the user
      *     lacks rights or if the CSRF token is invalid and 500 if any other error occurs
-     * @throws XWikiRestException
      */
     @GET
     Response getTourTasks(@PathParam("tourId") String tourId) throws XWikiRestException;

@@ -222,7 +222,7 @@ public class TasksManager
         updateTasksOrder(tourDocRef, Integer.MAX_VALUE, existingTasks, targetTask.getOrder());
         DocumentReference taskDocRef =
             this.documentReferenceResolver.resolve(taskId, this.documentReferenceResolver.resolve(tourId));
-        XWikiContext wikiContext = wikiContextProvider.get();
+        XWikiContext wikiContext = this.wikiContextProvider.get();
         XWiki wiki = wikiContext.getWiki();
         wiki.deleteAllDocuments(wiki.getDocument(taskDocRef, wikiContext), wikiContext);
     }
