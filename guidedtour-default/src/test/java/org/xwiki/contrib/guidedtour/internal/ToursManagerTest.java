@@ -61,6 +61,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.xwiki.contrib.guidedtour.internal.util.GuidedTourConstants.TOUR_CLASS;
 
+/**
+ * Test class for {@link ToursManager}.
+ *
+ * @version $Id$
+ */
 @ComponentTest
 class ToursManagerTest
 {
@@ -70,9 +75,9 @@ class ToursManagerTest
 
     private final SolrDocumentList solrDocumentList = new SolrDocumentList();
 
-    private final TourDTO tourDTO = new TourDTO(TOUR_ID, "dto Title", true);
+    private final TourDTO tourDTO = new TourDTO(TOUR_ID, "dto Title", true, "description");
 
-    private final TourDTO tourDTOUpdated = new TourDTO(TOUR_ID, "updated title", false);
+    private final TourDTO tourDTOUpdated = new TourDTO(TOUR_ID, "updated title", false, "description");
 
     @InjectMockComponents
     private ToursManager toursManager;
@@ -130,6 +135,7 @@ class ToursManagerTest
         when(this.wikiContext.getWiki()).thenReturn(this.xwiki);
         when(this.documentReferenceResolver.resolve(TOUR_ID)).thenReturn(this.documentReference);
         when(this.xwiki.getDocument(this.documentReference, this.wikiContext)).thenReturn(this.xwikiDocument);
+        when(this.documentReference.getName()).thenReturn(TOUR_ID);
         when(this.xwikiDocument.newXObject(TOUR_CLASS, this.wikiContext)).thenReturn(this.baseObject);
         when(this.xwikiDocument.getXObject(TOUR_CLASS)).thenReturn(this.baseObject);
         this.solrDocumentList.add(this.solrDocument);
@@ -158,12 +164,14 @@ class ToursManagerTest
     @Test
     void getAllTours() throws Exception
     {
-        when(this.queryUtil.executeQuery("class:XWiki.GuidedTour.TourClass", "type:DOCUMENT",
-            List.of(TourProperty.TITLE.formKey(CLASS_PREFIX),
-                TourProperty.IS_ACTIVE_BOOL.formKey(CLASS_PREFIX), TourProperty.IS_ACTIVE_INT.formKey(CLASS_PREFIX)))).thenReturn(
-            this.solrDocumentList);
-        when(this.solrDocument.getFirstValue("property.XWiki.GuidedTour.TourClass.title_string")).thenReturn("tour title");
-        when(this.solrDocument.getFirstValue("property.XWiki.GuidedTour.TourClass.isActive_int")).thenReturn(1);
+        when(this.queryUtil.executeQuery("class:XWiki.GuidedTour.TourClass",
+            "{!q.op=AND} type:DOCUMENT AND -name:TourTemplate",
+            List.of(TourProperty.TITLE.formKey(CLASS_PREFIX), TourProperty.DESCRIPTION.formKey(CLASS_PREFIX),
+                TourProperty.IS_ACTIVE_BOOL.formKey(CLASS_PREFIX), TourProperty.IS_ACTIVE_INT.formKey(CLASS_PREFIX)),
+            "")).thenReturn(this.solrDocumentList);
+        when(this.solrDocument.getFirstValue("property.XWiki.GuidedTour.TourClass.title_string")).thenReturn(
+            "tour title");
+        when(this.solrDocument.getFirstValue("property.XWiki.GuidedTour.TourClass.isActive_boolean")).thenReturn(true);
         when(this.solrDocumentReferenceResolver.resolve(this.solrDocument, EntityType.DOCUMENT)).thenReturn(
             this.documentReference);
         when(this.tasksManager.getAllTasks(this.documentReference.toString())).thenReturn(new ArrayList<>());
@@ -171,8 +179,8 @@ class ToursManagerTest
         List<TourDTO> tours = this.toursManager.getAllTours();
         assertEquals(1, tours.size());
         assertEquals("tour title", tours.get(0).getTitle());
-        assertTrue(tours.get(0).isActive());
-        assertTrue(tours.get(0).getTasksList().isEmpty());
+        assertTrue(tours.getFirst().isActive());
+        assertTrue(tours.getFirst().getTasksList().isEmpty());
     }
 
     @Test
@@ -199,8 +207,8 @@ class ToursManagerTest
     void deleteTour() throws Exception
     {
         when(this.documentReference.getLastSpaceReference()).thenReturn(this.spaceReference);
-        when(this.requestFactory.createDeleteRequest(List.of(this.documentReference.getLastSpaceReference()))).thenReturn(
-            this.deleteReq);
+        when(this.requestFactory.createDeleteRequest(
+            List.of(this.documentReference.getLastSpaceReference()))).thenReturn(this.deleteReq);
         this.toursManager.deleteTour(TOUR_ID);
         verify(this.jobExecutor, times(1)).execute(RefactoringJobs.DELETE, this.deleteReq);
     }

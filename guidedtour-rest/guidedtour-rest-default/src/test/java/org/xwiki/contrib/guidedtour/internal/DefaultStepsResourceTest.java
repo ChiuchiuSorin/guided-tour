@@ -53,6 +53,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test class for {@link DefaultStepsResource}.
+ *
+ * @version $Id$
+ */
 @ComponentTest
 class DefaultStepsResourceTest
 {
@@ -63,6 +68,9 @@ class DefaultStepsResourceTest
     private static final String TASK_ID = "taskId";
 
     private final StepDTO stepDTO = new StepDTO();
+
+    @RegisterExtension
+    private final LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
 
     @InjectMockComponents
     private DefaultStepsResource defaultStepsResource;
@@ -78,9 +86,6 @@ class DefaultStepsResourceTest
 
     @MockComponent
     private CSRFToken csrf;
-
-    @RegisterExtension
-    private final LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
 
     @Mock
     private Container container;

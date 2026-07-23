@@ -19,15 +19,8 @@
  */
 package org.xwiki.contrib.guidedtour.internal;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Provider;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-
+import com.xpn.xwiki.XWikiException;
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -49,7 +42,11 @@ import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
 
-import com.xpn.xwiki.XWikiException;
+import javax.inject.Provider;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,17 +54,16 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 /**
- * Test of {@link DefaultToursResource}.
+ * Test class for {@link DefaultToursResource}.
  *
  * @version $Id$
- * @since 1.0
  */
 @ComponentTest
 class DefaultToursResourceTest
 {
     private static final String CSRF_VALUE = "csrfToken";
 
-    private final TourDTO tourDTO = new TourDTO("tourId", "name", true);
+    private final TourDTO tourDTO = new TourDTO("tourId", "name", true, "description");
 
     @InjectMockComponents
     private DefaultToursResource defaultToursResource;
@@ -85,7 +81,7 @@ class DefaultToursResourceTest
     private CSRFToken csrf;
 
     @RegisterExtension
-    private final LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
+    private LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
 
     @Mock
     private Container container;
@@ -111,8 +107,8 @@ class DefaultToursResourceTest
     void getAvailableTours() throws QueryException, XWikiException, InvalidIdException
     {
         List<TourDTO> tours = new ArrayList<>(2);
-        tours.add(new TourDTO("id", "name", true));
-        tours.add(new TourDTO("id2", "name2", false));
+        tours.add(new TourDTO("id", "name", true, "description"));
+        tours.add(new TourDTO("id2", "name2", false, "description"));
         when(this.toursManager.getAllTours()).thenReturn(tours);
 
         Response response = this.defaultToursResource.getAvailableTours();

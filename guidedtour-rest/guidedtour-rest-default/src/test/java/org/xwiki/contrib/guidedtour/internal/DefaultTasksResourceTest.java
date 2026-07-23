@@ -35,6 +35,7 @@ import org.mockito.Mock;
 import org.xwiki.container.Container;
 import org.xwiki.container.servlet.ServletRequest;
 import org.xwiki.contrib.guidedtour.api.dtos.TaskDTO;
+import org.xwiki.contrib.guidedtour.api.exceptions.DuplicatedIdException;
 import org.xwiki.contrib.guidedtour.api.exceptions.InvalidIdException;
 import org.xwiki.csrf.CSRFToken;
 import org.xwiki.query.QueryException;
@@ -54,6 +55,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test class for {@link DefaultTasksResource}.
+ *
+ * @version $Id$
+ */
 @ComponentTest
 class DefaultTasksResourceTest
 {
@@ -79,7 +85,7 @@ class DefaultTasksResourceTest
     private CSRFToken csrf;
 
     @RegisterExtension
-    private final LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
+    private LogCaptureExtension logCapture = new LogCaptureExtension(LogLevel.DEBUG);
 
     @Mock
     private Container container;
@@ -91,7 +97,7 @@ class DefaultTasksResourceTest
     private HttpServletRequest httpServletRequest;
 
     @BeforeEach
-    void setup()
+    void setup() throws QueryException, XWikiException, DuplicatedIdException, InvalidIdException
     {
         when(this.containerProvider.get()).thenReturn(this.container);
         when(this.container.getRequest()).thenReturn(this.request);
@@ -99,6 +105,7 @@ class DefaultTasksResourceTest
         when(this.csrf.isTokenValid(CSRF_VALUE)).thenReturn(true);
         when(this.request.getRequest()).thenReturn(this.httpServletRequest);
         when(this.httpServletRequest.getHeader("xwiki-form-token")).thenReturn(CSRF_VALUE);
+        when(this.tasksManager.createTask(TOUR_ID, this.taskDTO)).thenReturn(this.taskDTO.getId());
     }
 
     @Test
@@ -107,9 +114,9 @@ class DefaultTasksResourceTest
         List<TaskDTO> tasks = new ArrayList<>(2);
         tasks.add(new TaskDTO("id1", "title", 1, true, new ArrayList<>()));
         tasks.add(new TaskDTO("id2", "title", 1, true, List.of("id1")));
-        when(this.tasksManager.getAllTasks(TOUR_ID)).thenReturn(tasks);
+        when(this.tasksManager.getAllTasks(TOUR_ID, "")).thenReturn(tasks);
 
-        Response response = this.defaultTasksResource.getTourTasks(TOUR_ID);
+        Response response = this.defaultTasksResource.getTourTasks(TOUR_ID, "");
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(tasks, response.getEntity());
         assertEquals("Executing: Tasks API: retrieving the tasks for tour [tourId].", this.logCapture.getMessage(0));
@@ -131,6 +138,7 @@ class DefaultTasksResourceTest
     void createTask()
     {
         Response response = this.defaultTasksResource.createTask(TOUR_ID, this.taskDTO);
+        assertEquals(response.getEntity(), this.taskDTO.getId());
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertEquals("Executing: Tasks API: creating task [taskId] for tour [tourId].", this.logCapture.getMessage(0));
     }
@@ -165,9 +173,9 @@ class DefaultTasksResourceTest
     {
         doThrow(new AccessDeniedException(Right.DELETE, null, null)).when(this.contextualAuthorizationManager)
             .checkAccess(Right.DELETE);
-        String taskId = this.taskDTO.getId();
-        WebApplicationException exception =
-            assertThrows(WebApplicationException.class, () -> this.defaultTasksResource.deleteTask(TOUR_ID, taskId));
+        WebApplicationException exception = assertThrows(WebApplicationException.class, () -> {
+            this.defaultTasksResource.deleteTask(TOUR_ID, this.taskDTO.getId());
+        });
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), exception.getResponse().getStatus());
         assertEquals("Executing: Tasks API: removing task [taskId] from tour [tourId].", this.logCapture.getMessage(0));
         assertEquals("Authorization error: Tasks API: removing task [taskId] from tour [tourId].",

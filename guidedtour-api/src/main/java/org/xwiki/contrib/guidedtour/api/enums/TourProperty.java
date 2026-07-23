@@ -90,7 +90,12 @@ public enum TourProperty
      * The queryParameters key as a base key without suffix, representing the query parameters to append to the URL when
      * navigating to the target page.
      */
-    QUERY_PARAMETERS("queryParameters", null);
+    QUERY_PARAMETERS("queryParameters", null),
+    /**
+     * The description key as a base key and sortString suffix representing the field type.
+     * @since 0.2
+     */
+    DESCRIPTION("description", "sortString");
 
     private static final String IS_ACTIVE_PROP_NAME = "isActive";
 

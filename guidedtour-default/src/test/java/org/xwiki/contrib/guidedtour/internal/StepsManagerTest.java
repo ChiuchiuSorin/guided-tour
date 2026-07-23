@@ -54,6 +54,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.xwiki.contrib.guidedtour.internal.util.GuidedTourConstants.STEP_CLASS;
 
+/**
+ * Test class for {@link StepsManager}.
+ *
+ * @version $Id$
+ */
 @ComponentTest
 class StepsManagerTest
 {
@@ -196,7 +201,8 @@ class StepsManagerTest
     {
         this.stepDTO.setOrder(-1);
         this.stepsManager.createStep("testTour", "testTask", this.stepDTO);
-        verify(this.stepObject1, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END, this.xwikiContext);
+        verify(this.stepObject1, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END,
+            this.xwikiContext);
         verify(this.stepObject1, times(1)).set(TourProperty.BACKDROP.getBaseKey(), 1, this.xwikiContext);
         verify(this.stepObject1, times(1)).set(TourProperty.REFLEX.getBaseKey(), 0, this.xwikiContext);
         verify(this.stepObject1, times(1)).set(TourProperty.ORDER.getBaseKey(), 4, this.xwikiContext);
@@ -216,7 +222,8 @@ class StepsManagerTest
     void updateStepSameOrder() throws XWikiException, InvalidIdException
     {
         this.stepsManager.updateStep("testTour", "testTask", 3, this.stepDTO);
-        verify(this.stepObject3, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END, this.xwikiContext);
+        verify(this.stepObject3, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END,
+            this.xwikiContext);
         verify(this.stepObject3, times(1)).set(TourProperty.BACKDROP.getBaseKey(), 1, this.xwikiContext);
         verify(this.stepObject3, times(1)).set(TourProperty.REFLEX.getBaseKey(), 0, this.xwikiContext);
     }
@@ -227,7 +234,8 @@ class StepsManagerTest
         this.stepDTO.setOrder(1);
 
         this.stepsManager.updateStep("testTour", "testTask", 3, this.stepDTO);
-        verify(this.stepObject3, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END, this.xwikiContext);
+        verify(this.stepObject3, times(1)).set(TourProperty.PLACEMENT.getBaseKey(), Placement.RIGHT_END,
+            this.xwikiContext);
         verify(this.stepObject3, times(1)).set(TourProperty.BACKDROP.getBaseKey(), 1, this.xwikiContext);
         verify(this.stepObject3, times(1)).set(TourProperty.REFLEX.getBaseKey(), 0, this.xwikiContext);
         verify(this.stepObject3, times(1)).set(TourProperty.ORDER.getBaseKey(), 1, this.xwikiContext);

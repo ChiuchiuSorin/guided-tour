@@ -51,6 +51,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.xwiki.contrib.guidedtour.internal.util.GuidedTourConstants.USER_TOUR_CLASS;
 
+/**
+ * Test class for {@link UserStatusManager}.
+ *
+ * @version $Id$
+ */
 @ComponentTest
 class UserStatusManagerTest
 {
@@ -111,7 +116,8 @@ class UserStatusManagerTest
         this.userStatusManager.createUserTourStatus();
 
         verify(this.userDocument, times(1)).newXObject(USER_TOUR_CLASS, this.wikiContext);
-        verify(this.xwiki, times(1)).saveDocument(this.userDocument, "Added guided tour user status object.", this.wikiContext);
+        verify(this.xwiki, times(1)).saveDocument(this.userDocument, "Added guided tour user status object.",
+            this.wikiContext);
     }
 
     @Test
@@ -140,7 +146,8 @@ class UserStatusManagerTest
             this.objectMapper.writeValueAsString(tasksStatus));
         verify(this.statusObject, times(1)).setStringValue("widgetState", "HIDDEN");
         verify(this.statusObject, times(1)).setIntValue("callToAction", 0);
-        verify(this.xwiki, times(1)).saveDocument(this.userDocument, "Updated guided tour user status.", this.wikiContext);
+        verify(this.xwiki, times(1)).saveDocument(this.userDocument, "Updated guided tour user status.",
+            this.wikiContext);
     }
 
     @Test
@@ -150,6 +157,7 @@ class UserStatusManagerTest
         InvalidIdException exception = assertThrows(InvalidIdException.class, () -> {
             this.userStatusManager.updateUserTourStatus(new UserTourStatusDTO());
         });
-        assertEquals(String.format("User tour status not found for user [%s].", this.userReference), exception.getMessage());
+        assertEquals(String.format("User tour status not found for user [%s].", this.userReference),
+            exception.getMessage());
     }
 }
