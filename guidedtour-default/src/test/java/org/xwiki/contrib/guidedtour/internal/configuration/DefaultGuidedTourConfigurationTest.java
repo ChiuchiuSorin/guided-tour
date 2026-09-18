@@ -39,7 +39,11 @@ class DefaultGuidedTourConfigurationTest
 {
     private static final String LINKS = """
         link1
+        
+        
+        
         link2
+        
         link3""";
 
     @InjectMockComponents

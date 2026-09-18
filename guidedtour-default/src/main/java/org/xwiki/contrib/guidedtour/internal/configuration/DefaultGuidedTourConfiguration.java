@@ -20,7 +20,9 @@
 package org.xwiki.contrib.guidedtour.internal.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,6 +60,8 @@ public class DefaultGuidedTourConfiguration implements GuidedTourConfiguration
     @Override
     public List<String> getUsefulLinks()
     {
-        return new ArrayList<>(List.of(this.mainConfiguration.getProperty(USEFUL_LINKS, "").split("\\n")));
+        String usefulLinksText = this.mainConfiguration.getProperty(USEFUL_LINKS, "");
+        return Arrays.stream(usefulLinksText.split("\\n")).filter(s -> !s.isBlank())
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 }
